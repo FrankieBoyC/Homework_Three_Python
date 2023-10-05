@@ -9,21 +9,21 @@ payStubs_queue = queue.Queue()
 
 fields = ['ID', 'Name', 'Title', 'Hours Worked', 'Hourly Wage', 'Federal Tax Rate']
 
-rows = [['1234', 'Franklin', 'Engineer', '2', '9.0', '.20'],
-        ['5467', 'Raberto', 'Developer', '2', '9.1', '.20'],
-        ['2345', 'Caity', 'FrontEnd', '2', '9.3', '.20'],
-        ['1235', 'Patrick', 'FrontEnd', '1', '9.5', '.20'],
-        ['3465', 'Prateek', 'Engineer', '3', '7.8', '.20'],
-        ['4567', 'Alberto', 'Engineer', '2', '9.1', '.20'],
-        ['5678', 'Orin', 'Engineer', '2', '9.0', '.20'],
-        ['1678', 'Eric', 'Developer', '2', '9.1', '.20'],
-        ['7565', 'Jose', 'FrontEnd', '2', '9.3', '.20'],
-        ['5677', 'Alberto', 'FrontEnd', '1', '9.5', '.20'],
-        ['7325', 'Alfred', 'Engineer', '3', '7.8', '.20'],
-        ['9043', 'Albert', 'Engineer', '2', '9.1', '.20'],
-        ['3065', 'Sarah', 'FrontEnd', '1', '9.5', '.20'],
-        ['9042', 'John', 'Engineer', '3', '7.8', '.20'],
-        ['2346', 'Tyler', 'Engineer', '2', '9.1', '.20']]
+rows = [['1234', 'Franklin', 'Engineer', '35', '25.3', '.20'],
+        ['5467', 'Raberto', 'Developer', '35', '25.3', '.20'],
+        ['2345', 'Caity', 'FrontEnd', '40', '25.3', '.20'],
+        ['1235', 'Patrick', 'FrontEnd', '40', '25.3', '.20'],
+        ['3465', 'Prateek', 'Engineer', '36', '25.2', '.20'],
+        ['4567', 'Alberto', 'Engineer', '26', '15.6', '.20'],
+        ['5678', 'Orin', 'Engineer', '15', '31.2', '.20'],
+        ['1678', 'Eric', 'Developer', '43', '34.4', '.20'],
+        ['7565', 'Jose', 'FrontEnd', '40', '40.1', '.20'],
+        ['5677', 'Alberto', 'FrontEnd', '40', '13.3', '.20'],
+        ['7325', 'Alfred', 'Engineer', '40', '23.3', '.20'],
+        ['9043', 'Albert', 'Engineer', '35', '24.4', '.20'],
+        ['3065', 'Sarah', 'FrontEnd', '25', '25.5', '.  20'],
+        ['9042', 'John', 'Engineer', '24', '27.8', '.20'],
+        ['2346', 'Tyler', 'Engineer', '28', '26.1', '.20']]
 
 filename = "EmployeeInfo.csv"
 
@@ -91,30 +91,29 @@ total_state_tax = 0
 total_social_security_tax = 0
 total_medicare_tax = 0
 
-#Testing
+'''Re-reading the file and processing queue.'''
 with open('EmployeeInfo.csv') as csv_file:
-        cvsRead = csv.reader(csv_file)
-        next(csv_file, None)
-        for line in cvsRead:
-            emp_id, first_name, job_title, hours_worked, hourly_wage, federal_tax_rate = (field.strip() for field in line)
-            employee = Employee(emp_id, first_name, job_title, float(hours_worked), float(hourly_wage), float(federal_tax_rate))
-            input_queue.put(employee)
+    cvsRead = csv.reader(csv_file)
+    next(csv_file, None)
+    for line in cvsRead:
+        emp_id, first_name, job_title, hours_worked, hourly_wage, federal_tax_rate = (field.strip() for field in line)
+        employee = Employee(emp_id, first_name, job_title, float(hours_worked), float(hourly_wage), float(federal_tax_rate))
+        input_queue.put(employee)
 
 
 while not input_queue.empty():
     employee = input_queue.get()
     gross_pay = employee.calculate_gross_pay()
     federal_tax = employee.calculate_federal_tax()
-    
+                
     state_tax = 0.1 * gross_pay
     social_security_tax = 0.05 * gross_pay
     medicare_tax = 0.02 * gross_pay
-    
+                
     net_pay = gross_pay - (federal_tax + state_tax + social_security_tax + medicare_tax)
-    
+                
     pay_stub = (employee.emp_id, f'{employee.first_name}', gross_pay, federal_tax, state_tax, social_security_tax, medicare_tax, net_pay)
     payStubs_queue.put(pay_stub)
-#Testing
 
 try:
     with open('summary.txt', 'w') as summary_file:

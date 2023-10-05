@@ -1,5 +1,5 @@
-Total Gross Pay for All Employees: 262.90000000000003
-Total Federal Taxes Withheld for All Employees: 0.5258
-Total State Taxes Withheld for All Employees: 26.29
-Total Social Security Withheld for All Employees: 13.145
-Total Medicare Amount Withheld for All Employees: 5.258
+Total Gross Pay for All Employees: 13012.5
+Total Federal Taxes Withheld for All Employees: 26.024999999999995
+Total State Taxes Withheld for All Employees: 1301.25
+Total Social Security Withheld for All Employees: 650.625
+Total Medicare Amount Withheld for All Employees: 260.25

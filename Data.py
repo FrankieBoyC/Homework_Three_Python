@@ -2,6 +2,10 @@ import queue
 import csv
 
 
+input_queue = queue.Queue()
+payStubs_queue = queue.Queue()
+
+
 class Employee:
     '''Creates an employee object.'''
     def __init__(self, emp_id, first_name, job_title, hours_worked, hourly_wage, federal_tax_rate):
@@ -21,5 +25,3 @@ class Employee:
     def calculate_federal_tax(self):
         """Calculates Federal Tax Rate."""
         return self.calculate_gross_pay() * (self.federal_tax_rate / 100)
-
-
